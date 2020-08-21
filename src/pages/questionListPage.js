@@ -27,8 +27,10 @@ const QuestionListPage = () => {
 
   useEffect(() => {
     fetchQuestions();
-  }, []);
+    // eslint-disable-next-line no-use-before-define
+  }, [fetchQuestions]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchQuestions = async () => {
     setLoading(true);
     //setError(false);
