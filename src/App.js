@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Global, css } from "@emotion/core";
+import normalize from "normalize.css";
+import { ThemeProvider } from "emotion-theming";
 
-function App() {
+import theme from "./components/theme";
+import QuestionListPage from "./pages/questionListPage.js";
+import QuestionDetailPage from "./pages/questionDetailPage";
+import "./App.css";
+
+const NoMatchRoute = () => <div>404 Not Found</div>;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Global
+        styles={css`
+          ${normalize}
+          body {
+            background-color: #fafafa;
+          }
+        `}
+      />
+      <Router>
+        <Switch>
+          <Route path="/" exact component={QuestionListPage} />
+          <Route
+            path="/questions/:questionId"
+            exact
+            component={QuestionDetailPage}
+          />
+          <Route component={NoMatchRoute} />
+        </Switch>
+      </Router>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
