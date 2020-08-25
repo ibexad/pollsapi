@@ -1,22 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
-import styled from "@emotion/styled";
-import { Container, Header } from "../components/shared";
+import {
+  Container,
+  Header,
+  HeaderContainer,
+  LogoText
+} from "../components/shared";
 import Loader from "../components/loader";
 import QuestionsList from "../components/questionsList";
-
-const HeaderContainer = styled(Container)`
-  display: flex;
-  align-items: center;
-  @media (max-width: 878px) {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-`;
-
-const LogoText = styled.h3`
-  margin: 0;
-`;
 
 const QuestionListPage = () => {
   const [questions, setQuestions] = useState("");

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Global, css } from "@emotion/core";
 import normalize from "normalize.css";
 import { ThemeProvider } from "emotion-theming";
@@ -21,7 +21,7 @@ const App = () => {
           }
         `}
       />
-      <Router>
+      <BrowserRouter>
         <Switch>
           <Route path="/" exact component={QuestionListPage} />
           <Route
@@ -31,7 +31,7 @@ const App = () => {
           />
           <Route component={NoMatchRoute} />
         </Switch>
-      </Router>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
