@@ -11,7 +11,6 @@ import QuestionsList from "../components/questionsList";
 
 const QuestionListPage = () => {
   const [questions, setQuestions] = useState("");
-  //const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const API_BASE_URL = `https://polls.apiblueprint.org/questions`;
@@ -24,13 +23,15 @@ const QuestionListPage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchQuestions = async () => {
     setLoading(true);
-    //setError(false);
-    try {
-      const result = await axios.get(API_BASE_URL);
-      setQuestions(result.data);
-    } catch (error) {
-      //setError(true);
-    }
+
+    await axios
+      .get(API_BASE_URL)
+      .then(result => setQuestions(result.data))
+      .catch(error => {
+        console.log(error);
+        return null;
+      });
+
     setLoading(false);
   };
 

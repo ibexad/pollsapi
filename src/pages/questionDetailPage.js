@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { Container, Header } from "../components/shared";
 import QuestionDetail from "../components/questionDetail";
 import Loader from "../components/loader";
-import ErrorText from "../components/errorText";
+import { NotifyComponent } from "react-notification-component";
 
 const HeaderContainer = styled(Container)`
   display: flex;
@@ -25,20 +25,19 @@ const QuestionDetailPage = ({ match }) => {
     params: { questionId }
   } = match;
   const [question, setQuestion] = useState(null);
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const API_BASE_URL = `https://polls.apiblueprint.org/questions`;
     const fetchQuestion = async () => {
       setLoading(true);
-      setError(false);
-      try {
-        const result = await axios.get(`${API_BASE_URL}/${questionId}`);
-        setQuestion(result.data);
-      } catch (error) {
-        setError(true);
-      }
+
+      await axios
+        .get(`${API_BASE_URL}/${questionId}`)
+        .then(result => setQuestion(result.data))
+        .catch(error => {
+          console.log(error);
+        });
       setLoading(false);
     };
     // Call the API
@@ -53,12 +52,10 @@ const QuestionDetailPage = ({ match }) => {
         </HeaderContainer>
       </Header>
       <Container>
+        <NotifyComponent />
         <Loader loading={loading}>
           loading question detail Id <strong>{questionId}</strong>
         </Loader>
-        {error && (
-          <ErrorText>Some error occurred, while fetching API</ErrorText>
-        )}
         {question && <QuestionDetail question={question} />}
         <br />
         <Link to={`/`} className="btn btn-secondary">
